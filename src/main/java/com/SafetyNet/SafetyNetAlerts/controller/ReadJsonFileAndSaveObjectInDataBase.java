@@ -1,7 +1,11 @@
 package com.SafetyNet.SafetyNetAlerts.controller;
 
 
+import com.SafetyNet.SafetyNetAlerts.model.Firestation;
+import com.SafetyNet.SafetyNetAlerts.model.Medicalrecord;
 import com.SafetyNet.SafetyNetAlerts.model.Person;
+import com.SafetyNet.SafetyNetAlerts.repository.FirestationRepository;
+import com.SafetyNet.SafetyNetAlerts.repository.MedicalrecordRepository;
 import com.SafetyNet.SafetyNetAlerts.repository.PersonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.CommandLineRunner;
@@ -15,19 +19,26 @@ import java.util.List;
 public class ReadJsonFileAndSaveObjectInDataBase {
 
     private final String jsonFilePersons = "src/main/resources/jsonfile/persons.json";
-
+    private final String jsonFileMedicalrecords = "src/main/resources/jsonfile/medicalrecords.json";
+    private final String jsonFileFirestations = "src/main/resources/jsonfile/firestations.json";
 
     @Bean
-    CommandLineRunner commandLineRunner(PersonRepository personRepository) {
-        //il fallait rajouter un constructeur vide, pourquoi ?
-        // il fallait modifier la list de person en []
-        // ajouter un id qui s'increment automatiquement par la base de donnée
-        // pourquoi l'application ne s'arrete pas quand les personnes sont sauvegarder???
+    CommandLineRunner commandLineRunner(PersonRepository personRepository, MedicalrecordRepository medicalrecordRepository, FirestationRepository firestationRepository) {
+
         return args -> {
             ObjectMapper mapper = new ObjectMapper();
+
             Person[] persons = mapper.readValue(new File(jsonFilePersons), Person[].class);
+            Medicalrecord[] medicalrecords = mapper.readValue(new File(jsonFileMedicalrecords), Medicalrecord[].class);
+            Firestation[] firestations = mapper.readValue(new File(jsonFileFirestations), Firestation[].class);
+
             personRepository.saveAll(List.of(persons));
-            System.out.println("persons saved !");
+            medicalrecordRepository.saveAll(List.of(medicalrecords));
+            firestationRepository.saveAll(List.of(firestations));
+
+            System.out.println("data persons saved !");
+            System.out.println("data medical records saved !");
+            System.out.println("data firestations saved !");
         };
     }
 }
