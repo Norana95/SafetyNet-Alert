@@ -2,12 +2,34 @@ package com.SafetyNet.SafetyNetAlerts.dto;
 
 public class PersonInfoDTO {
 
+    public String firstName;
     public String lastName;
     public String address;
     public int age;
     public String addressMail;
     public String[] medications;
     public String[] allergies;
+
+    public PersonInfoDTO(String firstName, String lastName, String address, int age, String addressMail, String[] medications, String[] allergies) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.age = age;
+        this.addressMail = addressMail;
+        this.medications = medications;
+        this.allergies = allergies;
+    }
+
+    public PersonInfoDTO() {
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
     public String getLastName() {
         return lastName;

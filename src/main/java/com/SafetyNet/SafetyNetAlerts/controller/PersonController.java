@@ -2,9 +2,7 @@ package com.SafetyNet.SafetyNetAlerts.controller;
 
 import com.SafetyNet.SafetyNetAlerts.dto.*;
 import com.SafetyNet.SafetyNetAlerts.model.Person;
-import com.SafetyNet.SafetyNetAlerts.model.Views;
 import com.SafetyNet.SafetyNetAlerts.service.PersonService;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,13 +39,13 @@ public class PersonController {
 
     //mettre à jour une personne existante
     @PatchMapping("person/update")
-    public Person updatePerson(Person person) {
-        return personService.updatePerson(person);
+    public void personUpdate(@RequestParam String firstName, String lastName, @RequestBody Person person) {
+        personService.updatePerson(firstName, lastName, person);
     }
 
     //supprimer une personne (utilisez une combinaison de prénom et de nom comme identificateur unique
     @DeleteMapping("person/delete")
-    public void deletePerson(String firstname, String lastname) {
+    public void deletePerson(@RequestParam String firstname, String lastname) {
         personService.deletePerson(firstname, lastname);
     }
 
@@ -61,10 +59,10 @@ public class PersonController {
     public CalculateNumberOfAdultAndChildren getPersonByStation(@RequestParam String stationNumber) {
         return personService.getPersonByStation(stationNumber);
     }
+
     /* Cette url doit retourner une liste d'enfants (tout individu âgé de 18 ans ou moins) habitant à cette adresse.
     La liste doit comprendre le prénom et le nom de famille de chaque enfant, son âge et une liste des autres
     membres du foyer. S'il n'y a pas d'enfant, cette url peut renvoyer une chaîne vide.*/
-
     @GetMapping("/childAlert")
     public List<ChildrenDTO> getChildrenByAddress(@RequestParam String address) {
         return personService.getChildrenList(address);
@@ -86,7 +84,6 @@ public class PersonController {
     }
 
     @GetMapping("/flood/stations")
-    @JsonView(Views.Normal.class)
     public List<FloodDTO> getFoyerByStationList(@RequestParam(name = "stations") List<String> stations) {
         return personService.getFoyerByStationList(stations);
     }

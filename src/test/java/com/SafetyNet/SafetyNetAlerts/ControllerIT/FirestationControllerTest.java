@@ -1,4 +1,4 @@
-package com.SafetyNet.SafetyNetAlerts.ControllerUnitTest;
+package com.SafetyNet.SafetyNetAlerts.ControllerIT;
 
 import com.SafetyNet.SafetyNetAlerts.controller.FirestationController;
 import com.SafetyNet.SafetyNetAlerts.model.Firestation;

@@ -28,10 +28,19 @@ public class PersonService {
 
     //ajouter une nouvelle personne
     public Person savePerson(Person person) {
+        Person newPerson = new Person();
+        newPerson.setFirstName(person.firstName);
+        newPerson.setLastName(person.lastName);
+        newPerson.setAddress(person.address);
+        newPerson.setCity(person.city);
+        newPerson.setZip(person.zip);
+        newPerson.setPhone(person.phone);
+        newPerson.setEmail(person.email);
         List<Person> personList = dataService.getPersons();
-        personList.add(person);
-        return personList.get(personList.indexOf(person));
+        personList.add(newPerson);
+        return personList.get(personList.indexOf(newPerson));
     }
+
 
     //*************************************************faut l'effacer celle la, c'est juste un test
     public List<Person> getPersonList() {
@@ -41,35 +50,27 @@ public class PersonService {
 
 
     //mettre à jour une personne existante
-    public Person updatePerson(Person person) {
-        if (dataService.getPersons().contains(person)) {
-            Person personUpdated = dataService.getPersons().get(dataService.getPersons().indexOf(person));
-            personUpdated.setAddress(new String());
-            personUpdated.setCity(new String());
-            personUpdated.setEmail(new String());
-            personUpdated.setPhone(new String());
-            personUpdated.setZip(new String());
-            System.out.println("person updated !");
-        } else {
-            System.out.println("this person don't exists !");
+    public void updatePerson(String firstName, String lastName, Person personUpdated) {
+        List<Person> personList = dataService.getPersons();
+        for (Person person : personList) {
+            if (person.firstName.equals(firstName) && person.lastName.equals(lastName)) {
+                person.setFirstName(personUpdated.firstName);
+                person.setLastName(personUpdated.lastName);
+                person.setAddress(personUpdated.address);
+                person.setCity(personUpdated.city);
+                person.setEmail(personUpdated.email);
+                person.setPhone(personUpdated.phone);
+                person.setZip(personUpdated.zip);
+                personList.set(personList.indexOf(person), person);
+                break;
+            }
         }
-        return person;
     }
 
     //supprimer une personne (utilisez une combinaison de prénom et de nom comme identificateur
     public void deletePerson(String firstname, String lastname) {
         List<Person> personList = dataService.getPersons();
-        Person personDeleted;
-        for (Person person : personList) {
-            if (person.getFirstName().equals(firstname) && person.getLastName().equals(lastname)) {
-                if (personList.remove(person)) {
-                    personDeleted = person;
-                    System.out.println("la personne a été supprimé");
-                }
-            } else {
-                System.out.println("il n'ya pas de person avec le nom et le prenom que vous avez saisi");
-            }
-        }
+        personList.removeIf(person -> person.getFirstName().equals(firstname) && person.getLastName().equals(lastname));
     }
 
 
@@ -221,36 +222,37 @@ public class PersonService {
         List<Medicalrecord> medicalrecordList = dataService.getMedicalrecords();
         List<FloodDTO> floodDTOList = new ArrayList<>();
         for (Firestation firestation : firestationList) {
-            List<FireDTO> residents = new ArrayList<>();
             if (station.contains(firestation.getStation())) {
+                List<Foyer> foyerList = new ArrayList<>();
                 FloodDTO floodDTO = new FloodDTO();
                 floodDTO.setAddress(firestation.address);
                 for (Person person : personList) {
                     if (person.getAddress().equals(firestation.getAddress())) {
-                        FireDTO fireDTO = new FireDTO();
-                        fireDTO.setLastName(person.lastName);
+                        Foyer foyer = new Foyer();
+                        foyer.setName(person.lastName);
+                        foyer.setPhone(person.phone);
                         for (Medicalrecord medicalrecord : medicalrecordList) {
                             if (person.firstName.equals(medicalrecord.firstName) && person.lastName.equals(medicalrecord.lastName)) {
                                 String birthDate = medicalrecord.getBirthdate();
                                 LocalDate birthdayDate = LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
                                 LocalDate currentDate = LocalDate.now();
                                 int age = Period.between(birthdayDate, currentDate).getYears();
-                                fireDTO.setMedications(medicalrecord.getMedications());
-                                fireDTO.setAllergies(medicalrecord.getAllergies());
-                                fireDTO.setPhoneNumber(person.phone);
-                                fireDTO.setAge(age);
-                                residents.add(fireDTO);
+                                foyer.setMedications(medicalrecord.getMedications());
+                                foyer.setAllergies(medicalrecord.getAllergies());
+                                foyer.setAge(age);
+                                foyerList.add(foyer);
                                 break;
                             }
                         }
                     }
                 }
-                floodDTO.setResidents(residents);
+                floodDTO.setFoyer(foyerList);
                 floodDTOList.add(floodDTO);
             }
         }
         return floodDTOList;
     }
+
     /*Cette url doit retourner le nom, l'adresse, l'âge, l'adresse mail et les antécédents médicaux (médicaments,
     posologie, allergies) de chaque habitant. Si plusieurs personnes portent le même nom, elles doivent
     toutes apparaître*/
@@ -259,8 +261,9 @@ public class PersonService {
         List<Medicalrecord> medicalrecordList = dataService.getMedicalrecords();
         List<PersonInfoDTO> personInfoDTOS = new ArrayList<>();
         for (Person person : personList) {
-            if (person.firstName.equals(firstName) && person.lastName.equals(lastName)) {
+            if (person.lastName.equals(lastName)) {
                 PersonInfoDTO personInfoDTO = new PersonInfoDTO();
+                personInfoDTO.setFirstName(person.firstName);
                 personInfoDTO.setLastName(person.lastName);
                 personInfoDTO.setAddress(person.address);
                 personInfoDTO.setAddressMail(person.email);

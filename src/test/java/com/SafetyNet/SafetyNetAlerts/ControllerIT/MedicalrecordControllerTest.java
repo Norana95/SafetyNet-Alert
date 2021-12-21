@@ -1,4 +1,4 @@
-package com.SafetyNet.SafetyNetAlerts.ControllerUnitTest;
+package com.SafetyNet.SafetyNetAlerts.ControllerIT;
 
 import com.SafetyNet.SafetyNetAlerts.controller.MedicalRecordController;
 import com.SafetyNet.SafetyNetAlerts.model.Medicalrecord;

@@ -1,14 +1,11 @@
 package com.SafetyNet.SafetyNetAlerts.dto;
 
-import com.SafetyNet.SafetyNetAlerts.model.Views;
-import com.fasterxml.jackson.annotation.JsonView;
-
 import java.util.List;
 
 public class FloodDTO {
-    String address;
-    @JsonView(Views.Normal.class)
-    List<FireDTO> residents;
+
+    public String address;
+    public List<Foyer> foyer;
 
     public String getAddress() {
         return address;
@@ -18,11 +15,11 @@ public class FloodDTO {
         this.address = address;
     }
 
-    public List<FireDTO> getResidents() {
-        return residents;
+    public List<Foyer> getFoyer() {
+        return foyer;
     }
 
-    public void setResidents(List<FireDTO> residents) {
-        this.residents = residents;
+    public void setFoyer(List<Foyer> foyer) {
+        this.foyer = foyer;
     }
 }

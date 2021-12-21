@@ -16,38 +16,43 @@ public class MedicalrecordService {
         this.dataService = dataService;
     }
 
+    public List<Medicalrecord> getMedicalrecordList() {
+        return dataService.getMedicalrecords();
+    }
+
     // ajouter un dossier médical
     public Medicalrecord saveMedicalrecords(Medicalrecord medicalrecords) {
-        dataService.getMedicalrecords().add(medicalrecords);
-        return dataService.getMedicalrecords().get(dataService.getMedicalrecords().indexOf(medicalrecords));
+        Medicalrecord newMedicalrecord = new Medicalrecord();
+        newMedicalrecord.setFirstName(medicalrecords.firstName);
+        newMedicalrecord.setLastName(medicalrecords.lastName);
+        newMedicalrecord.setBirthdate(medicalrecords.birthdate);
+        newMedicalrecord.setMedications(medicalrecords.medications);
+        newMedicalrecord.setAllergies(medicalrecords.allergies);
+        List<Medicalrecord> medicalrecordList = dataService.getMedicalrecords();
+        medicalrecordList.add(newMedicalrecord);
+        return medicalrecordList.get(medicalrecordList.indexOf(newMedicalrecord));
     }
 
     //mettre à jour un dossier medical existatnt
-    public Medicalrecord updateMedicalrecord(Medicalrecord medicalrecord) {
-        if (dataService.getMedicalrecords().contains(medicalrecord)) {
-            medicalrecord.setBirthdate(new String());
-            medicalrecord.setMedications(new String[]{});
-            medicalrecord.setAllergies(new String[]{});
-            System.out.println("medical updated !");
-        } else {
-            System.out.println("this medical record don't exists !");
+    public void updateMedicalrecord(String firstName, String lastName, Medicalrecord medicalrecord) {
+        List<Medicalrecord> medicalrecordList = dataService.getMedicalrecords();
+        for (Medicalrecord medicalrecord1 : medicalrecordList) {
+            if (medicalrecord1.firstName.equals(firstName) && medicalrecord1.lastName.equals(lastName)) {
+                medicalrecord1.setFirstName(medicalrecord.firstName);
+                medicalrecord1.setLastName(medicalrecord.lastName);
+                medicalrecord1.setBirthdate(medicalrecord.birthdate);
+                medicalrecord1.setMedications(medicalrecord.medications);
+                medicalrecord1.setAllergies(medicalrecord.allergies);
+                medicalrecordList.set(medicalrecordList.indexOf(medicalrecord1), medicalrecord1);
+                break;
+            }
         }
-        return medicalrecord;
     }
 
     //supprimer un dossier medical
     public void deleteMedicalrecord(String firstname, String lastname) {
         List<Medicalrecord> medicalrecordList = dataService.getMedicalrecords();
-        Medicalrecord medicalRecordDeleted = new Medicalrecord();
-        for (Medicalrecord medicalrecord : medicalrecordList) {
-            if (medicalrecord.getFirstName().equals(firstname) && medicalrecord.getLastName().equals(lastname)) {
-                if (medicalrecordList.remove(medicalrecord)) {
-                    medicalRecordDeleted = medicalrecord;
-                    System.out.println("ce dossier medical a été supprimé ");
-                }
-            } else {
-                System.out.println("il n'ya pas de dossier medical avec le nom et le prenom que vous avez saisi");
-            }
-        }
+        medicalrecordList.removeIf(medicalrecord -> medicalrecord.getFirstName().equals(firstname) && medicalrecord.getLastName().equals(lastname));
     }
 }
+

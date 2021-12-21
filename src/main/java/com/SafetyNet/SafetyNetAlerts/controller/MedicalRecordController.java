@@ -5,11 +5,18 @@ import com.SafetyNet.SafetyNetAlerts.service.MedicalrecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/medical records")
+@RequestMapping
 public class MedicalRecordController {
     @Autowired
     MedicalrecordService medicalrecordService;
+
+    @GetMapping("medicalrecord/list")
+    public List<Medicalrecord> getMedicalrecordList() {
+        return medicalrecordService.getMedicalrecordList();
+    }
 
     // ajouter un dossier médical
     @PostMapping("medicalrecord/create")
@@ -19,13 +26,13 @@ public class MedicalRecordController {
 
     //mettre à jour un dossier medical
     @PatchMapping("medicalrecord/update")
-    public Medicalrecord updateMedicalrecord(Medicalrecord medicalrecord) {
-        return medicalrecordService.updateMedicalrecord(medicalrecord);
+    public void updateMedicalrecord(@RequestParam String firstName, String lastName, @RequestBody Medicalrecord medicalrecord) {
+         medicalrecordService.updateMedicalrecord(firstName, lastName,medicalrecord);
     }
 
     //supprimer un dossier medical
     @DeleteMapping("medicalrecord/delete")
-    public void deleteMedicalrecord(String firstname, String lastname) {
+    public void deleteMedicalrecord(@RequestParam String firstname, String lastname) {
         medicalrecordService.deleteMedicalrecord(firstname, lastname);
     }
 }

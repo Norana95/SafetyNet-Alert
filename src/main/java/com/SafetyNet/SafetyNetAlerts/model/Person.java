@@ -85,4 +85,9 @@ public class Person {
     public String getZip() {
         return zip;
     }
+
+    public Person(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

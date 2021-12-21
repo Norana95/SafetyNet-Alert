@@ -1,4 +1,4 @@
-package com.SafetyNet.SafetyNetAlerts.ControllerUnitTest;
+package com.SafetyNet.SafetyNetAlerts.ControllerIT;
 
 import com.SafetyNet.SafetyNetAlerts.controller.PersonController;
 import com.SafetyNet.SafetyNetAlerts.model.Person;

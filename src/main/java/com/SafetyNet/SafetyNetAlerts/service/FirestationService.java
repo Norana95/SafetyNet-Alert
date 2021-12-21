@@ -26,34 +26,16 @@ public class FirestationService {
     //mettre à jour le numéro de la caserne de pompiers d'une adresse
     public void updateStationOfFirestation(String address, String stationNumber) {
         List<Firestation> firestationList = dataService.getFirestations();
-        boolean found = false;
         for (Firestation firestation : firestationList) {
             if (firestation.getAddress().equals(address)) {
                 firestation.setStation(stationNumber);
-                found = true;
             }
-        }
-        if (found) {
-            System.out.println("la station a bien été mis à jour !");
-        } else {
-            System.out.println("la station n'a pas pu etre mis à  jour !");
         }
     }
 
     //supprimer le mapping d'une caserne ou d'une adresse.
     public void deleteFirestation(String address, String stationNumber) {
         List<Firestation> firestationList = dataService.getFirestations();
-        boolean found = false;
-        for (Firestation firestation : firestationList) {
-            if (firestation.getAddress().equals(address) && firestation.getStation().equals(stationNumber) ) {
-                firestationList.remove(firestation);
-                found = true;
-            }
+        firestationList.removeIf(firestation -> firestation.getAddress().equals(address) && firestation.getStation().equals(stationNumber));
         }
-        if (found) {
-            System.out.println("la station a bien été mis à jour !");
-        } else {
-            System.out.println("la station n'a pas pu etre mis à  jour !");
-        }
-    }
 }

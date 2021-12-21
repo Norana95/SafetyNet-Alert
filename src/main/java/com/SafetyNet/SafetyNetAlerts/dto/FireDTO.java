@@ -1,18 +1,11 @@
 package com.SafetyNet.SafetyNetAlerts.dto;
 
-import com.SafetyNet.SafetyNetAlerts.model.Views;
-import com.fasterxml.jackson.annotation.JsonView;
-
 public class FireDTO {
-    @JsonView(Views.Normal.class)
+
     public String lastName;
-    @JsonView(Views.Normal.class)
     public String phoneNumber;
-    @JsonView(Views.Normal.class)
     public int age;
-    @JsonView(Views.Normal.class)
     public String[] medications;
-    @JsonView(Views.Normal.class)
     public String[] allergies;
     public String stationNumber;
 

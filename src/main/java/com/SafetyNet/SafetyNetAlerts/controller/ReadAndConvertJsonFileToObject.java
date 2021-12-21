@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -28,18 +30,23 @@ public class ReadAndConvertJsonFileToObject {
     CommandLineRunner commandLineRunner() {
 
         return args -> {
-            ObjectMapper mapper = new ObjectMapper();
-
-            Person[] readJsonFilePerson = mapper.readValue(new File(jsonFilePersons), Person[].class);
-            Medicalrecord[] readJsonFilemedicalrecords = mapper.readValue(new File(jsonFileMedicalrecords), Medicalrecord[].class);
-            Firestation[] readJsonFilefirestations = mapper.readValue(new File(jsonFileFirestations), Firestation[].class);
-
-            dataService.setPersons(List.of(readJsonFilePerson));
-            dataService.setMedicalrecords(List.of(readJsonFilemedicalrecords));
-            dataService.setFirestations(List.of(readJsonFilefirestations));
-
-
+            initData();
         };
+    }
+    public void initData() throws IOException {
+
+        dataService.setPersons(new ArrayList<>());
+        dataService.setMedicalrecords(new ArrayList<>());
+        dataService.setFirestations(new ArrayList<>());
+        ObjectMapper mapper = new ObjectMapper();
+
+        Person[] readJsonFilePerson = mapper.readValue(new File(jsonFilePersons), Person[].class);
+        Medicalrecord[] readJsonFilemedicalrecords = mapper.readValue(new File(jsonFileMedicalrecords), Medicalrecord[].class);
+        Firestation[] readJsonFilefirestations = mapper.readValue(new File(jsonFileFirestations), Firestation[].class);
+
+        dataService.getPersons().addAll(List.of(readJsonFilePerson));
+        dataService.getMedicalrecords().addAll(List.of(readJsonFilemedicalrecords));
+        dataService.getFirestations().addAll(List.of(readJsonFilefirestations));
     }
 }
 
