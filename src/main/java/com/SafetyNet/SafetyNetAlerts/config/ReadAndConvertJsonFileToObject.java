@@ -1,4 +1,4 @@
-package com.SafetyNet.SafetyNetAlerts.controller;
+package com.SafetyNet.SafetyNetAlerts.config;
 
 
 import com.SafetyNet.SafetyNetAlerts.model.Firestation;

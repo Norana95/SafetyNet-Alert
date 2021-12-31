@@ -1,6 +1,6 @@
 package com.SafetyNet.SafetyNetAlerts.ServiceUnitTest;
 
-import com.SafetyNet.SafetyNetAlerts.controller.ReadAndConvertJsonFileToObject;
+import com.SafetyNet.SafetyNetAlerts.config.ReadAndConvertJsonFileToObject;
 import com.SafetyNet.SafetyNetAlerts.model.Medicalrecord;
 import com.SafetyNet.SafetyNetAlerts.service.DataService;
 import com.SafetyNet.SafetyNetAlerts.service.MedicalrecordService;
@@ -32,10 +32,9 @@ public class MedicalrecordServiceTest {
     @Test
     void saveMedicalrecordTest() {
         Medicalrecord medicalrecord = new Medicalrecord("Norhene", "Boublenza", "28/07/1995", new String[]{"hydrapermazol:300mg", "dodoxadin:30mg"}, new String[]{"shellfish"});
-        Medicalrecord medicalrecordSaved = medicalrecordService.saveMedicalrecords(medicalrecord);
-        Assertions.assertEquals(medicalrecordSaved.firstName, medicalrecord.firstName);
-        Assertions.assertEquals(medicalrecordSaved.lastName, medicalrecord.lastName);
-        Assertions.assertNotNull(medicalrecordSaved);
+        medicalrecordService.saveMedicalrecords(medicalrecord);
+        List<Medicalrecord> medicalrecordList = dataService.getMedicalrecords();
+        Assertions.assertEquals(medicalrecordList.get(23).firstName, "Norhene");
     }
 
     // mettre à jour une personne test
@@ -57,8 +56,8 @@ public class MedicalrecordServiceTest {
         String lastName = "Marrack";
         medicalrecordService.deleteMedicalrecord(firstName, lastName);
         List<Medicalrecord> medicalrecordList = dataService.getMedicalrecords();
-        Assertions.assertNotEquals(medicalrecordList.get(6).firstName,"Jonanathan");
-        Assertions.assertNotEquals(medicalrecordList.get(6).lastName,"Marrack");
-        Assertions.assertEquals(medicalrecordList.get(6).firstName,"Peter");
+        Assertions.assertNotEquals(medicalrecordList.get(6).firstName, "Jonanathan");
+        Assertions.assertNotEquals(medicalrecordList.get(6).lastName, "Marrack");
+        Assertions.assertEquals(medicalrecordList.get(6).firstName, "Peter");
     }
 }

@@ -1,6 +1,6 @@
 package com.SafetyNet.SafetyNetAlerts.ServiceUnitTest;
 
-import com.SafetyNet.SafetyNetAlerts.controller.ReadAndConvertJsonFileToObject;
+import com.SafetyNet.SafetyNetAlerts.config.ReadAndConvertJsonFileToObject;
 import com.SafetyNet.SafetyNetAlerts.model.Firestation;
 import com.SafetyNet.SafetyNetAlerts.service.DataService;
 import com.SafetyNet.SafetyNetAlerts.service.FirestationService;
@@ -33,8 +33,10 @@ public class FirestationServiceTest {
     @Test
     void saveFirestationTest() {
         Firestation firestation = new Firestation("2 Boulevard Magenta", "1");
-        Firestation firestation1 = firestationService.saveFirestation(firestation);
-        Assertions.assertEquals(firestation1, firestation);
+        firestationService.saveFirestation(firestation);
+        List<Firestation> firestationList = dataService.getFirestations();
+        Assertions.assertEquals(firestationList.get(13).address, "2 Boulevard Magenta");
+        Assertions.assertNotNull(firestationList.get(13));
     }
     //mettre à jour
     @Test

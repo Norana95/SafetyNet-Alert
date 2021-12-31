@@ -1,6 +1,6 @@
 package com.SafetyNet.SafetyNetAlerts.ServiceUnitTest;
 
-import com.SafetyNet.SafetyNetAlerts.controller.ReadAndConvertJsonFileToObject;
+import com.SafetyNet.SafetyNetAlerts.config.ReadAndConvertJsonFileToObject;
 import com.SafetyNet.SafetyNetAlerts.dto.*;
 import com.SafetyNet.SafetyNetAlerts.model.Person;
 import com.SafetyNet.SafetyNetAlerts.service.DataService;
@@ -36,10 +36,11 @@ public class PersonServiceTest {
     @Test
     void ajouterUnePersonTest() {
         Person person = new Person("Norhene", "Boublenza", "54 rue jonquoy", "Paris", "54878", "2155454551", "boublenza.n@gmail.com");
-        Person personSaved = personService.savePerson(person);
-        Assertions.assertEquals(personSaved.firstName, person.firstName);
-        Assertions.assertEquals(personSaved.lastName, person.lastName);
-        Assertions.assertNotNull(personSaved);
+        personService.savePerson(person);
+        List<Person> personList = dataService.getPersons();
+        Assertions.assertEquals(personList.get(23).firstName, "Norhene");
+        Assertions.assertEquals(personList.get(23).lastName, "Boublenza");
+        Assertions.assertNotNull(personList.get(23));
     }
 
     // mettre à jour une personne test

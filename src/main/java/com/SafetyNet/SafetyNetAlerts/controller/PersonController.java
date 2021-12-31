@@ -3,6 +3,8 @@ package com.SafetyNet.SafetyNetAlerts.controller;
 import com.SafetyNet.SafetyNetAlerts.dto.*;
 import com.SafetyNet.SafetyNetAlerts.model.Person;
 import com.SafetyNet.SafetyNetAlerts.service.PersonService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,8 @@ import java.util.List;
 @RequestMapping
 public class PersonController {
 
+    Logger logger = LoggerFactory.getLogger(PersonController.class);
+
     @Autowired
     PersonService personService;
 
@@ -22,30 +26,28 @@ public class PersonController {
 
     //ajouter une nouvelle personne ;
     @PostMapping("/create")
-    public Person savePerson(@RequestBody Person person) {
-        return personService.savePerson(person);
+    public void savePerson(@RequestBody Person person) {
+        logger.info("inside class : PersonController | method : savePerson");
+        personService.savePerson(person);
     }
 
     @GetMapping("persons/list")
     public List<Person> getPersonList() {
+        logger.info("inside class : PersonController | method : getPersonList");
         return personService.getPersonList();
     }
-
-
-    /*@GetMapping("/childAlert")
-    public List<ArrayList<Person>> getListChildren(@RequestParam String address){
-        return personService.getListChildren(address);
-    }*/
 
     //mettre à jour une personne existante
     @PatchMapping("person/update")
     public void personUpdate(@RequestParam String firstName, String lastName, @RequestBody Person person) {
+        logger.info("inside class : PersonController | method : personUpdate");
         personService.updatePerson(firstName, lastName, person);
     }
 
     //supprimer une personne (utilisez une combinaison de prénom et de nom comme identificateur unique
     @DeleteMapping("person/delete")
     public void deletePerson(@RequestParam String firstname, String lastname) {
+        logger.info("inside class : PersonController | method : deletePerson");
         personService.deletePerson(firstname, lastname);
     }
 
@@ -57,6 +59,7 @@ public class PersonController {
     */
     @GetMapping("/firestation")
     public CalculateNumberOfAdultAndChildren getPersonByStation(@RequestParam String stationNumber) {
+        logger.info("inside class : PersonController | method : getPersonByStation");
         return personService.getPersonByStation(stationNumber);
     }
 
@@ -65,6 +68,7 @@ public class PersonController {
     membres du foyer. S'il n'y a pas d'enfant, cette url peut renvoyer une chaîne vide.*/
     @GetMapping("/childAlert")
     public List<ChildrenDTO> getChildrenByAddress(@RequestParam String address) {
+        logger.info("inside class : PersonController | method : getChildrenByAddress");
         return personService.getChildrenList(address);
     }
 
@@ -72,6 +76,7 @@ public class PersonController {
     pompiers. Nous l'utiliserons pour envoyer des messages texte d'urgence à des foyers spécifiques.*/
     @GetMapping("/phoneAlert")
     public List<String> getPhoneNumber(@RequestParam(name = "firestation") String stationNumber) {
+        logger.info("inside class : PersonController | method : getPhoneNumber");
         return personService.getPhoneNumber(stationNumber);
     }
 
@@ -80,11 +85,13 @@ public class PersonController {
      médicaux (médicaments, posologie et allergies) de chaque personne. */
     @GetMapping("/fire")
     public List<FireDTO> getInhabitantByAddress(@RequestParam String address) {
+        logger.info("inside class : PersonController | method : getInhabitantByAddress");
         return personService.getInhabitantByAddress(address);
     }
 
     @GetMapping("/flood/stations")
     public List<FloodDTO> getFoyerByStationList(@RequestParam(name = "stations") List<String> stations) {
+        logger.info("inside class : PersonController | method : getFoyerByStationList");
         return personService.getFoyerByStationList(stations);
     }
   /*Cette url doit retourner le nom, l'adresse, l'âge, l'adresse mail et les antécédents médicaux (médicaments,
@@ -92,11 +99,13 @@ public class PersonController {
     toutes apparaître*/
     @GetMapping("/personInfo")
     public List<PersonInfoDTO> getPersonByFirstNameAndLastName(@RequestParam String firstName, @RequestParam String lastName) {
+        logger.info("inside class : PersonController | method : getPersonByFirstNameAndLastName");
         return personService.getPersonByFirstNameAndLastName(firstName, lastName);
     }
     // Cette url doit retourner les adresses mail de tous les habitants de la ville.
     @GetMapping("/communityEmail")
     public List<String> getAddressMailByCity(@RequestParam String city) {
+        logger.info("inside class : PersonController | method : getAddressMailByCity");
         return personService.getAddressMailByCity(city);
     }
 
