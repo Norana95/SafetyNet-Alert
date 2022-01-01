@@ -1,8 +1,8 @@
 package com.SafetyNet.SafetyNetAlerts.ServiceUnitTest;
 
-import com.SafetyNet.SafetyNetAlerts.config.ReadAndConvertJsonFileToObject;
+import com.SafetyNet.SafetyNetAlerts.dao.ReadAndConvertJsonFileToObject;
 import com.SafetyNet.SafetyNetAlerts.model.Firestation;
-import com.SafetyNet.SafetyNetAlerts.service.DataService;
+import com.SafetyNet.SafetyNetAlerts.dao.DataService;
 import com.SafetyNet.SafetyNetAlerts.service.FirestationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

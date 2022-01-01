@@ -1,5 +1,6 @@
 package com.SafetyNet.SafetyNetAlerts.service;
 
+import com.SafetyNet.SafetyNetAlerts.dao.DataService;
 import com.SafetyNet.SafetyNetAlerts.model.Medicalrecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

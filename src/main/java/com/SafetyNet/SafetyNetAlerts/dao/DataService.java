@@ -1,4 +1,4 @@
-package com.SafetyNet.SafetyNetAlerts.service;
+package com.SafetyNet.SafetyNetAlerts.dao;
 
 import com.SafetyNet.SafetyNetAlerts.model.Firestation;
 import com.SafetyNet.SafetyNetAlerts.model.Medicalrecord;

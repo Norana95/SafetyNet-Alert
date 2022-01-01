@@ -1,5 +1,6 @@
 package com.SafetyNet.SafetyNetAlerts.service;
 
+import com.SafetyNet.SafetyNetAlerts.dao.DataService;
 import com.SafetyNet.SafetyNetAlerts.dto.*;
 import com.SafetyNet.SafetyNetAlerts.model.Firestation;
 import com.SafetyNet.SafetyNetAlerts.model.Medicalrecord;

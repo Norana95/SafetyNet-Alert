@@ -1,8 +1,8 @@
 package com.SafetyNet.SafetyNetAlerts.ServiceUnitTest;
 
-import com.SafetyNet.SafetyNetAlerts.config.ReadAndConvertJsonFileToObject;
+import com.SafetyNet.SafetyNetAlerts.dao.ReadAndConvertJsonFileToObject;
 import com.SafetyNet.SafetyNetAlerts.model.Medicalrecord;
-import com.SafetyNet.SafetyNetAlerts.service.DataService;
+import com.SafetyNet.SafetyNetAlerts.dao.DataService;
 import com.SafetyNet.SafetyNetAlerts.service.MedicalrecordService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,10 +1,9 @@
-package com.SafetyNet.SafetyNetAlerts.config;
+package com.SafetyNet.SafetyNetAlerts.dao;
 
 
 import com.SafetyNet.SafetyNetAlerts.model.Firestation;
 import com.SafetyNet.SafetyNetAlerts.model.Medicalrecord;
 import com.SafetyNet.SafetyNetAlerts.model.Person;
-import com.SafetyNet.SafetyNetAlerts.service.DataService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
